@@ -1,14 +1,10 @@
 from __future__ import absolute_import, print_function, division
 import pandas as pd
-
-import json
-import codecs
 import re
-import traceback
 from datetime import datetime as dt
 from datetime import timedelta as td
 
-from config import ConverterConfig, CsvWriterConfig
+from config import ConverterConfig
  
 __all__ = []
 
@@ -388,6 +384,15 @@ class Event(object):
             ed = EventDate.parse(ref_date, parts[7], parts[9])
             obj.bdate = ed.begin
             obj.edate = ed.end
+
+            # work-around: multiple day event can not be set by only two `date`,
+            # it need additional `time` info. 
+            # (This bug only occurs when events are imported to Google calendar 
+            #  by .csv files)
+            if ed.end is not None:
+                et = EventTime.parse('8:00~17:00')
+                obj.btime = et.begin
+                obj.etime = et.end
         elif parts[3] is not None:
             # time
             ed = EventDate.parse(ref_date, parts[3])
