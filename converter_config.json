@@ -1,0 +1,101 @@
+{
+    "calendar": {
+        "default_values": [
+            {"week": null},
+            {
+                "date": {
+                    "begin": null,
+                    "end": null
+                }
+            },
+            {"theme": null},
+            {"tg": null},
+            {"admin": null},
+            {"academic": null},
+            {"student": null},
+            {"hygiene": null},
+            {"general": null},
+            {"kingdergarten": null}
+        ],
+        "key_map": {
+            "week": "週次",
+            "date": "日期",
+            "theme": "主題週",
+            "tg": "導護老師",
+            "admin": "行政",
+            "academic": "教導 - 教務",
+            "student": "教導 - 學務",
+            "hygiene": "教導 - 衛生",
+            "general": "總務",
+            "kingdergarten": "幼教"
+        }
+    },
+    "writer": {
+        "default_values": [
+            {"Subject": ""},
+            {"Start Date": ""},
+            {"Start Time": null},
+            {"End Date": null},
+            {"End Time": null},
+            {"All Day Event": true},
+            {"Description": null},
+            {"Location": null},
+            {"Private": false}
+        ],
+        "key_map": {
+            "Subject": "title",
+            "Start Date": "bdate",
+            "Start Time": "btime",
+            "End Date": "edate",
+            "End Time": "etime",
+            "Description": "description",
+            "Location": "location"
+        },
+        "key_map_sections": {
+            "AdminAffair": "行政",
+            "AcademicSection": "教導-教務",
+            "StudentSection": "教導-學務",
+            "HygieneSection": "教導-衛生",
+            "GeneralAffair": "總務",
+            "Kingdergarten": "幼兒園"
+        }
+    },
+    "classtime":{
+        "ct1": "08:40~09:20",
+        "bt1": "09:20~09:30",
+        "ct2": "09:30~10:10",
+        "bt2": "10:10~10:30",
+        "ct3": "10:30~11:10",
+        "bt3": "11:10~11:20",
+        "ct4": "11:20~12:00",
+        "lt": "12:00~12:30",
+        "lb": "12:30~13:00",
+        "bt4": "13:00~13:10",
+        "ct5": "13:10~13:50",
+        "bt5": "13:50~14:00",
+        "ct6": "14:00~14:40",
+        "bt6": "14:40~14:50",
+        "ct7": "14:50~15:30",
+        "bt7": "15:30~15:35",
+        "ct8": "15:35~16:15"
+    },
+    "classtime_map":{
+        "第一節": "ct1",
+        "下課1": "bt1",
+        "第二節": "ct2",
+        "下課2": "bt2",
+        "第三節": "ct3",
+        "下課3": "bt3",
+        "第四節": "ct4",
+        "午餐時間": "lt",
+        "午休時間": "lb",
+        "下課4": "bt4",
+        "第五節": "ct5",
+        "下課5": "bt5",
+        "第六節": "ct6",
+        "下課6": "bt6",
+        "第七節": "ct7",
+        "下課7": "bt7",
+        "第八節": "ct8"
+    }
+}

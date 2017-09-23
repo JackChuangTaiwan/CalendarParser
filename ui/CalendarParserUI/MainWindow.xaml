@@ -1,0 +1,57 @@
+﻿<Window x:Class="CalendarParserUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CalendarParserUI"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525" WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="resources/resMainWindow.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <StackPanel x:Name="spBackground" HorizontalAlignment="Left" Height="350" VerticalAlignment="Top" Width="525" Background="#FF4B4B4B">
+        <DockPanel x:Name="dpHeader" Height="50" LastChildFill="False" VerticalAlignment="Top" Width="525" Background="#FF5C5C5C" MouseMove="dpHeader_MouseMove">
+            <Button x:Name="btnExit" Height="30" Width="30" Margin="10,0,0,0" Style="{DynamicResource Style_FlatButton}" Click="btnExit_Click">
+                <Image Source="images/exit.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+            </Button>
+            <Button x:Name="btnAppSetting" Height="30" Width="30" Style="{DynamicResource Style_FlatButton}" Margin="430,0,0,0" Click="btnAppSetting_Click">
+                <Image Source="images/gear.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+            </Button>
+        </DockPanel>
+        <DockPanel x:Name="dpIORegion" Height="275" LastChildFill="False">
+            <Grid x:Name="gdInput" Height="275" VerticalAlignment="Top" Width="225">
+                <Button x:Name="btnInput" Style="{DynamicResource Style_FlatButton}" AllowDrop="True" Click="btnInput_Click" Drop="btnInput_Drop" DragEnter="btnInput_DragEnter">
+                    <Grid>
+                        <Image x:Name="imgInputRegion" Source="images/iobg_drop.png" RenderOptions.BitmapScalingMode="HighQuality" Opacity="0.5" Margin="10,10,10,10" Visibility="Visible"/>
+                        <Image x:Name="imgInputFile" Source="images/iobg_xlsx.png" RenderOptions.BitmapScalingMode="HighQuality" Width="140" Visibility="Hidden"/>
+                        <TextBlock x:Name="tbInput" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="WrapWithOverflow" 
+                                   Width="120" TextAlignment="Center" Foreground="#FFCCCCCC"/>
+                    </Grid>
+                </Button>
+            </Grid>
+            <Grid Height="275" VerticalAlignment="Top" Width="75">
+                <Button x:Name="btnConvert" Width="50" Height="50" Style="{DynamicResource Style_FlatButton}" Click="btnConvert_Click">
+                    <Image Source="images/convert.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                </Button>
+            </Grid>
+            <Grid Height="275" VerticalAlignment="Top" Width="225">
+                <Button x:Name="btnOutput" Style="{DynamicResource Style_FlatButton}" Click="btnOutput_Click">
+                    <Grid Height="275" VerticalAlignment="Center" Width="225">
+                        <Image Source="images/iobg_folder.png" RenderOptions.BitmapScalingMode="HighQuality" Width="140" VerticalAlignment="Center" Margin="0,0,0,0"/>
+                        <TextBlock x:Name="tbOutputFolder" FontSize="11" Foreground="#FFCCCCCC" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,110,0,0"
+                                   TextWrapping="WrapWithOverflow" Text="Select a folder"/>
+                    </Grid>
+                </Button>
+            </Grid>
+        </DockPanel>
+        <DockPanel x:Name="dpFooter" Height="25" LastChildFill="False" Background="#FF5C5C5C">
+            <TextBlock x:Name="tbStatus" Background="Transparent" FontSize="12" Foreground="White" Margin="10,0,0,0" 
+                       TextAlignment="Left" VerticalAlignment="Center"/>
+        </DockPanel>
+
+    </StackPanel>
+</Window>
