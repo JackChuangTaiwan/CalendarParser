@@ -119,5 +119,5 @@ You can still import them to Google calendar normally.
 
 [1]: https://sourceforge.net/projects/winpython/files/WinPython_2.7/2.7.10.3/ "WinPython 2.7"
 [2]: https://docs.google.com/spreadsheets/d/1_7grLuMZjpgWAr6zV3F3J2ROTaXUwPYXxwWaAP1L-Ro/edit?usp=sharing "Semester schedule template"
-[app_download_link]: https://github.com/NaleRaphael/CalendarParser/releases/download/1.0.0/calendar_parser.rar
+[app_download_link]: https://github.com/NaleRaphael/CalendarParser/releases/download/1.0.1/calendar_parser_v1.0.1.rar
 [gcalendar]: https://calendar.google.com/
