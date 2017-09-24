@@ -24,7 +24,7 @@ You can take this [template][2] as a reference.
 |No specified time|`* - event title`|* - Meeting_preparation|
 |Single day|`date - event title`|29 - Doge's_birthday (no birthday cake?!)|
 |Specific time in a single day|`date^time - event title`|15^8:00 - Story_time @classroom|
-|Specific time range in a single day|'date^time01~time02 - event title`|9^9:00~16:00 - Sports_competition|
+|Specific time range in a single day|`date^time01~time02 - event title`|9^9:00~16:00 - Sports_competition|
 |Multiple day|`date01~date02 - event title`|10~11 - Final_exam|
 
 Note that the date range of the week is written in [template][2], so that we just have to write the day of a date in the beginning of an event.  
