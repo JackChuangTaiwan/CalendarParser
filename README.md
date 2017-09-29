@@ -74,8 +74,10 @@ bad: 18-midterm@classroom(math)
 ``` > cd calendar-parser```
 
 2. Specify the file to be parsed and a directory for saving output files  
-``` > python main.py -f [file_to_be_parsed] -o [dir_for_output]```  
-![](screenshots/exec_through_cmd.png)  
+``` > python main.py [file_to_be_parsed] -o [dir_for_output]```  
+![](screenshots/exec_through_cmd02.png)  
+If output directory is not specified (no `-o` flag), files will be saved in the working directory
+![](screenshots/exec_through_cmd01.png)
 
 ### Execute through UI
 ![](screenshots/cp03.gif)  
