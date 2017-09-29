@@ -193,9 +193,11 @@ class WeekSchedule(object):
     def __getitem__(self, key):
         return self.__dict__[key]
 
-    def to_csv(self, writer, path):
+    def to_csv(self, writer, path, mode='w'):
+        if mode.lower() not in ['w', 'a']:
+            raise ValueError('Mode can only be `w`(write) or `a`(append).')
         # TODO: export to csv using utf-8 coding
-        with open(path, 'w') as f:
+        with open(path, mode) as f:
             for sec in self.sections():
                 writer.write(f, self[sec])
 
