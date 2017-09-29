@@ -53,9 +53,9 @@
         },
         "key_map_sections": {
             "AdminAffair": "行政",
-            "AcademicSection": "教導-教務",
-            "StudentSection": "教導-學務",
-            "HygieneSection": "教導-衛生",
+            "AcademicSection": "教務",
+            "StudentSection": "學務",
+            "HygieneSection": "衛生",
             "GeneralAffair": "總務",
             "Kingdergarten": "幼兒園"
         }
