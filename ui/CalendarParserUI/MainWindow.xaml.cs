@@ -84,10 +84,7 @@ namespace CalendarParserUI
 
         private void btnAppSetting_Click(object sender, RoutedEventArgs e)
         {
-            Window winSetting = new WindowSetting();
-            winSetting.Owner = this;
-            winSetting.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            winSetting.Show();
+            ShowSettingWindow();
         }
 
         private void btnConvert_Click(object sender, RoutedEventArgs e)
@@ -98,6 +95,7 @@ namespace CalendarParserUI
                     return;
                 string ifile = tbInput.Text;
                 string ofile = tbOutputFolder.Text;
+                checkPyShell();
                 workerThread = new Thread(() => Convert(ifile, ofile));
                 workerThread.Start();
                 workerThread.Join();
@@ -122,6 +120,14 @@ namespace CalendarParserUI
                 tbInput.Text = fileName;
                 tbInput.Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x20, 0x20, 0x20));
             }
+        }
+
+        private void ShowSettingWindow()
+        {
+            Window winSetting = new WindowSetting();
+            winSetting.Owner = this;
+            winSetting.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            winSetting.Show();
         }
 
         #region python shell setting
@@ -154,7 +160,6 @@ namespace CalendarParserUI
 
         private void Convert(string ifile, string odir)
         {
-            checkPyShell();
             pyProc.StartInfo.Arguments += PyArgs.InputFile + ifile;
             pyProc.StartInfo.Arguments += PyArgs.OutputDir + odir;
 
@@ -167,6 +172,16 @@ namespace CalendarParserUI
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(Properties.Settings.Default.PythonPath) ||
+                string.IsNullOrEmpty(Properties.Settings.Default.ScriptPath))
+            {
+                // Force to set python / script path
+                ShowSettingWindow();
             }
         }
     }
