@@ -38,10 +38,12 @@ def parse_calendar(ipath, opath, output_mode='single'):
     for i, ws in enumerate(wss):
         if output_mode == 'single':
             fname = 'cnv_{0}.csv'.format(bname)
+            mode = 'w' if i == 0 else 'a'
         elif output_mode == 'multiple':
             fname = 'cnv_{0}_{1}.csv'.format(bname, i)
+            mode = 'w'
         fname = os.path.join(opath, fname)
-        ws.to_csv(EventWriter(), fname, mode='a')
+        ws.to_csv(EventWriter(), fname, mode=mode)
 
 def main():
     args = parse_args()
