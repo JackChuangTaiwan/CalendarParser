@@ -9,3 +9,6 @@
 **/.vs/
 ui/CalendarParserUI/bin
 ui/CalendarParserUI/obj
+
+# release
+CalendarParser_release/
