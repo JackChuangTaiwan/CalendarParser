@@ -40,7 +40,7 @@ class CsvWriterConfig(ConfigBase):
     def __init__(self, **kwargs):
         super(CsvWriterConfig, self).__init__(**kwargs)
         self.km = self.misc.pop('key_map')
-        self.km_sec = self.misc.pop('key_map_sections')
+        self.km_content = self.misc.pop('key_map_content')
         self.ko = None
         self.ho = None
 

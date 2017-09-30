@@ -60,7 +60,7 @@ ud = lambda x: x.decode('utf-8')
 class EventWriter(object):
     def __init__(self):
         self.config = ConverterConfig().CsvWriterConfig
-        self.km_sec = self.config.km_sec
+        self.km_content = self.config.km_content
 
     def write(self, f, obj):
         km = self.config.km
@@ -79,11 +79,10 @@ class EventWriter(object):
             # replace all `None` by empty string
             temp = [events[i][km[k]] if events[i][km[k]] is not None else ''
                     for k in km]
-            temp[idx] = u'{0}:{1}'.format(self.km_sec[obj.__class__.__name__], 
-                        temp[idx])
+            temp[idx] = u'{0}:{1}'.format(
+                        self.km_content[obj.__class__.__name__], temp[idx])
             # encode utf-8 into unicode
             temp = [ue(val) if type(val) is unicode else val for val in temp]
-            
 
             for i, val in enumerate(temp):
                 if type(val) is dt:
@@ -146,8 +145,8 @@ class WeekSchedule(object):
         return ['week', 'date', 'theme', 'tg', 'admin', 'academic', 'student', 
                 'hygiene', 'general', 'kingdergarten']
 
-    def sections(self):
-        return ['admin', 'academic', 'student', 'hygiene', 'general', 
+    def content(self):
+        return ['theme', 'tg', 'admin', 'academic', 'student', 'hygiene', 'general', 
                 'kingdergarten']
 
     @classmethod
@@ -177,9 +176,9 @@ class WeekSchedule(object):
         ws.week = col[ws.hidx('week')]
         ws.date = EventDate.strptime(col[ws.hidx('date')])
 
-        # TODO: theme in even weeks is empty, fill them
-        ws.theme = col[ws.hidx('theme')] 
-        ws.tg = col[ws.hidx('tg')]
+        ws.theme = WeekTheme.parse(ws.date, col[ws.hidx('theme')])
+        ws.tg = TrafficGuard.parse(ws.date, 
+                u'{0} - {1}'.format(ws.week, col[ws.hidx('tg')]))
 
         ws.admin = AdminAffair.parse(col[ws.hidx('admin')], ws.date)
         ws.academic = AcademicSection.parse(col[ws.hidx('academic')], ws.date)
@@ -198,7 +197,7 @@ class WeekSchedule(object):
             raise ValueError('Mode can only be `w`(write) or `a`(append).')
         # TODO: export to csv using utf-8 coding
         with open(path, mode) as f:
-            for sec in self.sections():
+            for sec in self.content():
                 writer.write(f, self[sec])
 
 
@@ -327,14 +326,15 @@ class Event(object):
     regex = re.compile(r'({0}|{1}|{2})\s*\-\s*{3}{4}{5}'.format(pat_time1,
             pat_time2, pat_time3, pat_title, pat_loc, pat_des), re.UNICODE)
 
-    def __init__(self):
-        self.bdate = None
-        self.edate = None
-        self.btime = None
-        self.etime = None
-        self.title = None
-        self.location = None
-        self.description = None
+    def __init__(self, bdate=None, edate=None, btime=None, etime=None, 
+                 title=None, location=None, description=None):
+        self.bdate = bdate
+        self.edate = edate
+        self.btime = btime
+        self.etime = etime
+        self.title = title
+        self.location = location
+        self.description = description
 
     def __repr__(self):
         res = (
@@ -415,6 +415,59 @@ class Event(object):
         obj.description = (u'\"{0}\"'.format(parts[15]) 
             if parts[15] is not None else '')
         return obj
+
+
+class WeekEvent(object):
+    def __init__(self):
+        self.events = []
+        super(WeekEvent, self).__init__()
+
+    def __repr__(self):
+        evnt_content = ';'.join(map(str, self.events))
+        res = '{0}:\n {1}'.format(self.__class__.__name__, evnt_content)
+        return res
+
+    @classmethod
+    def parse(clz, week_date, title, location='', description='',
+              failed_value=None):
+        """
+        Parameters
+        ----------
+        week_date : EventDate
+        title : string
+        location : string
+        description : string
+        failed_value : 
+        """
+        obj = clz()
+        evnt = Event()
+        evnt.bdate = week_date.begin
+        evnt.edate = week_date.end
+
+        # work-around: multiple day event can not be set by only two `date`,
+        # it need additional `time` info. 
+        # (This bug only occurs when events are imported to Google calendar 
+        #  by .csv files)
+        et = EventTime.parse('8:00~17:00')
+        evnt.btime = et.begin
+        evnt.etime = et.end
+
+        evnt.title = title
+        evnt.location = location
+        evnt.description = description
+
+        obj.events.append(evnt)
+        return obj
+
+
+class WeekTheme(WeekEvent):
+    def __init__(self):
+        super(WeekTheme, self).__init__()
+
+
+class TrafficGuard(WeekEvent):
+    def __init__(self):
+        super(TrafficGuard, self).__init__()
 
 
 class AffairBase(object):

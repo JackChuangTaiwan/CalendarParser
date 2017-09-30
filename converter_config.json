@@ -51,7 +51,9 @@
             "Description": "description",
             "Location": "location"
         },
-        "key_map_sections": {
+        "key_map_content": {
+            "WeekTheme": "主題週",
+            "TrafficGuard": "導護老師",
             "AdminAffair": "行政",
             "AcademicSection": "教務",
             "StudentSection": "學務",
