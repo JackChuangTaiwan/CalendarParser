@@ -65,6 +65,8 @@ class EventWriter(object):
     def write(self, f, obj):
         km = self.config.km
         events = obj.events
+        if obj.events is None:
+            return
 
         # write header
         header = [k for k in km]
@@ -482,6 +484,9 @@ class AffairBase(object):
     @classmethod
     def parse(clz, src, weekdate):
         obj = clz()
+        if type(src) not in [unicode, str]:
+            obj.event = []
+            return obj
         content = src.split('\n')
         temp = [Event.parse(val, ref_date=weekdate.begin) for val in content]
         obj.events = [val for val in temp if val is not None]
