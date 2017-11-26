@@ -1,6 +1,8 @@
 from __future__ import absolute_import, print_function, division
 import pandas as pd
 import re
+import warnings
+
 from datetime import datetime as dt
 from datetime import timedelta as td
 
@@ -363,7 +365,8 @@ class Event(object):
         return self.__dict__.keys()
 
     @classmethod
-    def parse(clz, src, ref_date=None, failed_value=None):
+    def parse(clz, src, ref_date=None, raise_exception=False, 
+              failed_value=None):
         """
         Parameters
         ----------
@@ -377,7 +380,12 @@ class Event(object):
         parts = clz.regex.split(src)
 
         if len(parts) < 15:
-            return failed_value
+            msg = src if type(src) is str else src.encode('utf-8')
+            
+            if not raise_exception:
+                ParserWarning.warn('')
+                return failed_value
+            raise ParserError('Format of string is not correct: {0}'.format(msg))
 
         obj = Event()
         if parts[10] == u'*':
@@ -408,7 +416,7 @@ class Event(object):
             obj.btime = et.begin
             obj.etime = et.end
         else:
-            raise Exception('Cannot parse string correctly.')
+            raise ParserError('Cannot parse string correctly.')
 
         # those content which may contains commas should be enclosed by `""`
         obj.title = (u'\"{0}\"'.format(parts[11]) 
@@ -488,7 +496,14 @@ class AffairBase(object):
             obj.event = []
             return obj
         content = src.split('\n')
-        temp = [Event.parse(val, ref_date=weekdate.begin) for val in content]
+        try:
+            temp = [Event.parse(
+                    val, 
+                    ref_date=weekdate.begin, 
+                    raise_exception=True) 
+                    for val in content]
+        except:
+            raise
         obj.events = [val for val in temp if val is not None]
         return obj
 
@@ -521,3 +536,23 @@ class GeneralAffair(AffairBase):
 class Kingdergarten(AffairBase):
     def __init__(self):
         super(Kingdergarten, self).__init__()
+
+
+class ParserError(Exception):
+    def __init__(self, message='', **kwargs):
+        super(ParserError, self).__init__(**kwargs)
+        self.message = 'ParserError: {0}'.format(message)
+
+
+class ParserWarning(Warning):
+    def __init__(self, message='', **kwargs):
+        super(ParserWarning, self).__init__(**kwargs)
+        self.message = message
+
+
+class ExceptionMessageCollector(object):
+    def __init__(self):
+        self.collected = []
+
+    def collect(self, errmsg):
+        self.collected.append(errmsg)

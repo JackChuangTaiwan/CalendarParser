@@ -61,12 +61,14 @@ def eventtime_test():
 
 if __name__ == '__main__':
     try:
-        fpath = r'data\template.xlsx'
+        fpath = r'data\template3.xlsx'
         # main(fpath)
         # wk_test()
         # config_test()
-        # parse_test(fpath)
-        event_test()
+        parse_test(fpath)
+        # event_test()
         # eventtime_test()
-    except Exception:
-        traceback.print_exc()
+    except Exception as ex:
+        print(ex)
+        print(ex.message)
+        # traceback.print_exc()
